@@ -9,49 +9,44 @@ import SwiftUI
 
 import SwiftUI
 
-//MARK: - Экран, который показывает информацию о выбранном Bluetooth-устройстве.
+//MARK: - Экран, который показывает информацию о выбранном Bluetooth-устройс.
 struct BluetoothDeviceDetailView: View {
-    let device: BluetoothDevice  // Это экземпляр устройства, который передаётся в этот экран.
-
+    let device: BluetoothDevice
     var body: some View {
-        // VStack - это вертикальный стек (контейнер), который располагает все элементы внутри себя по вертикали.
+        
         VStack(alignment: .leading, spacing: 10) {
-            // Заголовок страницы, который сообщает пользователю, что здесь информация об устройстве.
+           
             Text("Информация об устройстве")
-                .font(.title)  // Делаем шрифт заголовка большим, чтобы он выделялся.
-                .bold()  // Делаем текст жирным, чтобы он выглядел важным.
-                .padding(.bottom, 10)  // Добавляем отступ вниз, чтобы текст не слипался с остальными элементами.
+                .font(.title)
+                .bold()
+                .padding(.bottom, 10)
 
-            // Дальше идут строки с данными, каждая строка - это название параметра и его значение.
-            BluetoothDetailRow(label: "Имя:", value: device.name)  // Отображаем название устройства.
-            BluetoothDetailRow(label: "UUID:", value: device.uuid)  // Уникальный идентификатор устройства.
-            BluetoothDetailRow(label: "RSSI:", value: "\(device.rssi)")  // Уровень сигнала устройства, приводим число к строке.
-            BluetoothDetailRow(label: "Статус:", value: device.status)  // Текущий статус устройства (например, подключено или нет).
+        
+            BluetoothDetailRow(label: "Имя:", value: device.name)
+            BluetoothDetailRow(label: "UUID:", value: device.uuid)
+            BluetoothDetailRow(label: "RSSI:", value: "\(device.rssi)")
+            BluetoothDetailRow(label: "Статус:", value: device.status)
 
-            Spacer()  // Раздвигает содержимое вверх, заполняя всё свободное пространсво внизу экрана.
+            Spacer()
         }
-        .padding()  // Добавляем отступы вокруг всего VStack, чтобы контент не прилипал к краям экрана.
-        .navigationTitle("Детали устройства")  // Устанавливаем заголвок в навигационной панели сверху.
+        .padding()
+        .navigationTitle("Детали устройства")
     }
 }
 
-//MARK: - Компонент, который создаёт строку с названием параметра и его значением.
+//MARK: - Компонент, который создаёт строку с названием параметр его значением.
 struct BluetoothDetailRow: View {
-    let label: String  // параметра, например, "Имя:"
-    let value: String  // параметра, например, "iPhone"
+    let label: String
+    let value: String
 
     var body: some View {
-        // HStack - горизонтальный стек, который располагает элементы в одну линию.
         HStack {
-            Text(label)  // Это название параметра (например, "Имя:"), всегда слева.
-                .fontWeight(.bold)  // Делаем текст жирным, чтобы он был заметнее.
-
-            Spacer()  // Этот элемент создаёт пустое пространство между названием и значением
-                   
-
-            Text(value)  // Это значение параметра (например, "AirPods Pro"), всегда справа.
-                .foregroundColor(.gray)  // Делаем текст серым, чтобы он выглядел второстепенным.
+            Text(label)
+                .fontWeight(.bold)
+            Spacer()
+            Text(value)
+                .foregroundColor(.gray)
         }
-        .padding(.vertical, 4)  // Добавляем отступ сверху и снизу, чтобы строки не слипались.
+        .padding(.vertical, 4)
     }
 }

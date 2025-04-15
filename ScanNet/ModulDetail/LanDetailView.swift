@@ -8,47 +8,42 @@
 import SwiftUI
 //MARK: - Экран с детальной информацией о LAN-устройстве.
 struct DeviceDetailView: View {
-    let device: LanDeviceModel  // Экземпляр модели устройства, который передаётся в этот экран.
+    let device: LanDeviceModel
 
     var body: some View {
-        // VStack — это контейнер, который располагает элементы внутри себя по вертикали.
         VStack(alignment: .leading, spacing: 10) {
-            // Заголовок страницы, который сообщает пользователю, что он смотрит информацию об устройстве.
             Text("Информация об устройстве")
-                .font(.title)  // Делаем шрифт крупным, чтобы заголовок выделялся.
-                .bold()  // Делаем текст жирным для наглядности.
-                .padding(.bottom, 10)  // Добавляем отступ вниз, чтобы текст не прижимался к остальным элементам.
+                .font(.title)
+                .bold()
+                .padding(.bottom, 10)
+            LanDetailRow(label: "Имя:", value: device.name)
+            LanDetailRow(label: "IP-адрес:", value: device.ipAddress)
+            LanDetailRow(label: "MAC-адрес:", value: device.mac)
+            LanDetailRow(label: "Бренд:", value: device.brand)
 
-            // Здесь отображаются строки с деталями об устройстве, каждая строка состоит из названия параметра и его значения.
-            LanDetailRow(label: "Имя:", value: device.name)  // Имя устройства.
-            LanDetailRow(label: "IP-адрес:", value: device.ipAddress)  // IP-адрес устройства в сети.
-            LanDetailRow(label: "MAC-адрес:", value: device.mac)  // Уникальный MAC-адрес устройства.
-            LanDetailRow(label: "Бренд:", value: device.brand)  // Производитель устройства.
-
-            Spacer()  // Раздвигает содержимое вверх, заполняя оставшееся место, чтобы список не прилипал к нижней границе экрана.
+            Spacer()
         }
-        .padding()  // Добавляем отступы вокруг всего VStack, чтобы контент не прилегал к краям экрана.
-        .navigationTitle("Детали устройства")  // Устанавливаем заголовок в панели навигации.
+        .padding()
+        .navigationTitle("Детали устройства")
     }
 }
 
 //MARK: - Вспомогательный компонент, который создаёт строку с названием параметра и его значением.
 struct LanDetailRow: View {
-    let label: String  // IP-адрес:
-    let value: String  // пример "192.168.1.1
+    let label: String
+    let value: String
 
     var body: some View {
-        // HStack — контейнер, который располагает элементы в строку (по горизонтали).
         HStack {
-            Text(label)  // Название параметра, которое всегда будет слева.
-                .fontWeight(.bold)  // Делаем текст жирным, чтобы он выделялся.
+            Text(label)
+                .fontWeight(.bold)
 
-            Spacer()  // Этот элемент создаёт пустое пространство между названием и значением
+            Spacer()
                     
 
-            Text(value)  // Значение параметра (например, "192.168.1.1").
-                .foregroundColor(.gray)  // Делаем текс серым
+            Text(value)
+                .foregroundColor(.gray)
         }
-        .padding(.vertical, 4)  // Добавляем небольшой отступ сверху и снизу
+        .padding(.vertical, 4) 
     }
 }

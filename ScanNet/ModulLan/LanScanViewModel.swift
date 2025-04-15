@@ -6,49 +6,63 @@
 //
 
 import SwiftUI
-import LanScanner
+import LanScanner  
 
+//MARK: - ViewModel для управления сканированием устройств в сети LAN
 class LanScanViewModel: ObservableObject {
-
-    @Published var connectedDevices = [LanDevice]()
-    @Published var progress: CGFloat = 0.0
-    @Published var title: String = ""
+    @Published var connectedDevices = [LanDeviceModel]()
     @Published var showAlert = false
+    @Published var isScanning = false
 
     private lazy var scanner = LanScanner(delegate: self)
+    private var timer: Timer?
 
-    init() {
-        startScanning()
-    }
-
+    //MARK: - Метод для начала сканирования
     func startScanning() {
-        connectedDevices.removeAll()
-        progress = 0.0
+        connectedDevices.removeAll() 
+        isScanning = true
+        showAlert = false
         scanner.start()
+
+        timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: false) { _ in
+            self.stopScanning()
+        }
+    }
+
+    //MARK: - Метод для остановки сканирования
+    func stopScanning() {
+        isScanning = false
+        scanner.stop()
+        timer?.invalidate()
+        showAlert = true  
     }
 }
 
+// Расширение для соответствия делегату LanScannerDelegate
 extension LanScanViewModel: LanScannerDelegate {
+    //MARK: - Метод для обновления прогресса сканирования (можно использовать для отображения прогресса)
     func lanScanHasUpdatedProgress(_ progress: CGFloat, address: String) {
-        DispatchQueue.main.async {
-            self.progress = progress
-            self.title = address
-        }
+        // В этом примере мы не используем прогресс, но можно добавить логику
     }
 
+    //MARK: - Метод, вызываемый при нахождении нового устройства в сети
     func lanScanDidFindNewDevice(_ device: LanDevice) {
+        // Обновляем список устройств на главном потоке
         DispatchQueue.main.async {
-            self.connectedDevices.append(device)
+            let newDevice = LanDeviceModel(from: device)  // Преобразуем найденное устройство в модель
+            self.connectedDevices.append(newDevice)  // Добавляем устройство в список
+            // Сохраняем информацию о новом устройстве в Core Data
+            CoreDataManager.shared.saveDevice(
+                name: newDevice.name,
+                ipAddress: newDevice.ipAddress,
+                mac: newDevice.mac,
+                brand: newDevice.brand
+            )
         }
     }
 
+    //MARK: - Метод, вызываемый по завершению сканирования
     func lanScanDidFinishScanning() {
-        DispatchQueue.main.async {
-            self.showAlert = true
-        }
+        self.stopScanning()  // Останавливаем сканирование
     }
-}
-
-extension LanDevice: Identifiable {
-    public var id: UUID { UUID() }
 }

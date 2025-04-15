@@ -74,7 +74,7 @@ class CoreDataManager {
         do {
             return try !context.fetch(fetchRequest).isEmpty
         } catch {
-            print("Ошибка при проверке существования устройства по UUID: \(error)")  // Обрабатываем ошибку запроса
+            print("Ошибка при проверке существования устройства по UUID: \(error)")
             return false
         }
     }
@@ -89,7 +89,7 @@ class CoreDataManager {
         do {
             return try !context.fetch(fetchRequest).isEmpty
         } catch {
-            print("Ошибка при проверке существования устройства по IP: \(error)")  // Обрабатываем ошибку запроса
+            print("Ошибка при проверке существования устройства по IP: \(error)")
             return false
         }
     }
@@ -100,12 +100,11 @@ class CoreDataManager {
         let context = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Device> = Device.fetchRequest()
 
-        // Пытаемся выполнить запрос и возвращаем все устройства
         do {
             return try context.fetch(fetchRequest)
         } catch {
-            print("Ошибка загрузки данных: \(error)")  // Обрабатываем ошибку запроса
-            return []  // Возвращаем пустой массив в случае ошибки
+            print("Ошибка загрузки данных: \(error)")
+            return []
         }
     }
 }

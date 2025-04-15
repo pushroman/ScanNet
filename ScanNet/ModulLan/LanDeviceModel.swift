@@ -6,12 +6,29 @@
 //
 
 import Foundation
+import LanScanner
 
-import Foundation
+struct LanDeviceModel: Identifiable {
+    let id = UUID()
+    let name: String
+    let ipAddress: String
+    let mac: String
+    let brand: String
+    
 
-//struct LanDevice: Identifiable {
-//    let id: UUID
-//    let ip: String
-//    let mac: String
-//    let name: String
-//}
+    //MARK: - Инициализатор для Core Data
+    init(name: String, ipAddress: String, mac: String, brand: String) {
+        self.name = name
+        self.ipAddress = ipAddress
+        self.mac = mac
+        self.brand = brand
+    }
+
+    //MARK: - Инициализатор для преобразования из библиотеки `LanDevice`
+    init(from device: LanDevice) {
+        self.name = device.name
+        self.ipAddress = device.ipAddress
+        self.mac = device.mac
+        self.brand = device.brand
+    }
+}

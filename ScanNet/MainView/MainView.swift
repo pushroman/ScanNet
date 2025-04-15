@@ -9,12 +9,12 @@ import SwiftUI
 
 //MARK: - Основной экран приложения
 struct MainView: View {
-    // Состояние для отслеживания, был ли экран запущен
+    // Состояние для отслеживания
     @State private var isLaunched = false
 
     var body: some View {
         ZStack {
-            // Если экран был запущен, показываем основной экран с вкладками
+            // Если экран был запущен, показываем основной экран
             if isLaunched {
                 TabView {
                     // Экран Bluetooth с иконкой
@@ -23,34 +23,30 @@ struct MainView: View {
                             Label("Bluetooth", systemImage: "antenna.radiowaves.left.and.right")
                         }
                     
-                    // Экран LAN с иконкой
                     LanScanView()
                         .tabItem {
                             Label("Lan", systemImage: "wifi")
                         }
 
-                    // Экран Истории с иконкой
                     HistoryView()
                         .tabItem {
                             Label("История", systemImage: "clock")
                         }
                 }
             } else {
-                // Если экран не запущен, показываем анимацию загрузки
+                
                 VStack {
                     LottieAnimationViewWrapper(filename: "Loading")  // Вставляем анимацию Lottie
                         .frame(width: 200, height: 200)  // Размер анимации
                         .padding(.top, 20)  // Отступ сверху
                 }
-                // Центрируем анимацию по экрану
+                
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.white)  // Белый фон
                 .edgesIgnoringSafeArea(.all)  // Игнорируем безопасные зоны (например, выемки экрана)
                 .onAppear {
-                    // Задержка на 2 секунды перед переключением на основной экран
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         withAnimation {
-                            // После задержки анимационно изменяем состояние isLaunched
                             isLaunched = true
                         }
                     }
@@ -72,7 +68,7 @@ struct MainView_Previews: PreviewProvider {
 struct ScanNetApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()  // Загружаем MainView при старте приложения
+            MainView()
         }
     }
 }
