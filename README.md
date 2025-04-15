@@ -18,7 +18,7 @@
 - `Swift`, `SwiftUI`
 - `CoreBluetooth`
 - `LanScan`
-- `MVVM` + разделение логики на сервисы
+- `MVVM`
 - `Core Data`
 - `Lottie`, `ProgressView`
 - Поддержка iOS 15+
