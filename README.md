@@ -19,7 +19,7 @@
 - `CoreBluetooth`
 - `LanScan`
 - `MVVM` + разделение логики на сервисы
-- `Core Data`, `Realm`, `SQLite`
+- `Core Data`
 - `Lottie`, `ProgressView`
 - Поддержка iOS 15+
 
