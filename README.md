@@ -20,7 +20,7 @@
 - `LanScan`
 - `MVVM`
 - `Core Data`
-- `Lottie`, `ProgressView`
+- `Lottie`
 - Поддержка iOS 15+
 
 
